@@ -21,7 +21,7 @@ int main() {
     gpio_set_dir(LED_BLUE,GPIO_OUT);
     // Conecta à rede WiFi
     // Parâmetros: Nome da rede (SSID) e senha
-    if(connect_to_wifi("LASSTEN", "24021601CF")){
+    if(connect_to_wifi("psn", "kelvin123")){
         // Se a conexão for bem-sucedida, acende o LED verde
         gpio_put(LED_GREEN, 1);
         sleep_ms(1000);
@@ -36,7 +36,7 @@ int main() {
 
     // Configura o cliente MQTT
     // Parâmetros: ID do cliente, IP do broker, usuário, senha
-    mqtt_setup("bitdog1", "192.168.15.6", "mauricio", "1234");
+    mqtt_setup("bitdog2", "192.168.0.230", "saopa", "1234");
 
     // Mensagem original a ser enviada
     const char *mensagem = "26.5";
