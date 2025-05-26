@@ -20,6 +20,38 @@ static void mqtt_connection_cb(mqtt_client_t *client, void *arg, mqtt_connection
     }
 }
 
+
+void mqtt_subscribe_callback(void *arg, err_t err) {
+    if (err == ERR_OK) {
+        printf("Subscribe realizado com sucesso!\n");
+    } else {
+        printf("Erro ao fazer subscribe! Código: %d\n", err);
+    }
+}
+
+// Implementações (em qualquer lugar depois dos protótipos)
+void mqtt_incoming_publish_cb(void *arg, const char *topic, u32_t tot_len) {
+    printf("Mensagem recebida no tópico: %s (tamanho total: %lu)\n", topic, (unsigned long)tot_len);
+}
+void mqtt_incoming_data_cb(void *arg, const u8_t *data, u16_t len, u8_t flags) {
+    printf("Conteúdo recebido: ");
+    for (u16_t i = 0; i < len; i++) {
+        putchar(data[i]);
+    }
+    printf("\n");
+}
+
+void subscribe_to_topic(const char *topic, int sub) {
+    // Inscreve-se no tópico especificado
+    err_t status = mqtt_sub_unsub(client, topic, 0, mqtt_subscribe_callback, NULL, sub);
+
+    if (status != ERR_OK) {
+        printf("Erro ao se inscrever no tópico %s: %d\n", topic, status);
+    } else {
+        printf("Inscrito com sucesso no tópico: %s\n", topic);
+    }
+}
+
 /* Função para configurar e iniciar a conexão MQTT
  * Parâmetros:
  *   - client_id: identificador único para este cliente
@@ -58,6 +90,7 @@ void mqtt_setup(const char *client_id, const char *broker_ip, const char *user, 
     //   - NULL: argumento opcional para o callback
     //   - &ci: informações de conexão
     mqtt_client_connect(client, &broker_addr, 1883, mqtt_connection_cb, NULL, &ci);
+    mqtt_set_inpub_callback(client, mqtt_incoming_publish_cb, mqtt_incoming_data_cb, NULL);
 }
 
 /* Callback de confirmação de publicação
@@ -94,4 +127,7 @@ void mqtt_comm_publish(const char *topic, const uint8_t *data, size_t len) {
     if (status != ERR_OK) {
         printf("mqtt_publish falhou ao ser enviada: %d\n", status);
     }
+
+    
 }
+
