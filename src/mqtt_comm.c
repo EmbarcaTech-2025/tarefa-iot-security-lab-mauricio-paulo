@@ -29,17 +29,8 @@ void mqtt_subscribe_callback(void *arg, err_t err) {
     }
 }
 
-// Implementações (em qualquer lugar depois dos protótipos)
-void mqtt_incoming_publish_cb(void *arg, const char *topic, u32_t tot_len) {
-    printf("Mensagem recebida no tópico: %s (tamanho total: %lu)\n", topic, (unsigned long)tot_len);
-}
-void mqtt_incoming_data_cb(void *arg, const u8_t *data, u16_t len, u8_t flags) {
-    printf("Conteúdo recebido: ");
-    for (u16_t i = 0; i < len; i++) {
-        putchar(data[i]);
-    }
-    printf("\n");
-}
+
+
 
 void subscribe_to_topic(const char *topic, int sub) {
     // Inscreve-se no tópico especificado
@@ -58,7 +49,7 @@ void subscribe_to_topic(const char *topic, int sub) {
  *   - broker_ip: endereço IP do broker como string (ex: "192.168.1.1")
  *   - user: nome de usuário para autenticação (pode ser NULL)
  *   - pass: senha para autenticação (pode ser NULL) */
-void mqtt_setup(const char *client_id, const char *broker_ip, const char *user, const char *pass) {
+void mqtt_setup(const char *client_id, const char *broker_ip, const char *user, const char *pass, void* cb1, void* cb2) {
     ip_addr_t broker_addr;  // Estrutura para armazenar o IP do broker
     
     // Converte o IP de string para formato numérico
@@ -90,7 +81,7 @@ void mqtt_setup(const char *client_id, const char *broker_ip, const char *user, 
     //   - NULL: argumento opcional para o callback
     //   - &ci: informações de conexão
     mqtt_client_connect(client, &broker_addr, 1883, mqtt_connection_cb, NULL, &ci);
-    mqtt_set_inpub_callback(client, mqtt_incoming_publish_cb, mqtt_incoming_data_cb, NULL);
+    mqtt_set_inpub_callback(client, cb1, cb2, NULL);
 }
 
 /* Callback de confirmação de publicação
