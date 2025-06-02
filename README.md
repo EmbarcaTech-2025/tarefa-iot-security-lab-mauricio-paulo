@@ -2,17 +2,31 @@
 
 # Tarefa: IoT Security Lab - EmbarcaTech 2025
 
-Autor: **Insira Seu Nome**
+Autores: **Mauricio e Paulo Santos do Nascimento Filho**
 
 Curso: Residência Tecnológica em Sistemas Embarcados
 
 Instituição: EmbarcaTech - HBr
 
-Campinas, ___ de 2025
+Campinas, 02 de junho de 2025
 
 ---
 
-<!-- INSIRA O CONTEÚDO DO SEU README AQUI! -->
+# Relato e Análise
+
+**Execução das Etapas**
+
+Breve descrição funcionamento:
+
+  
+
+  -vídeo
+
+Discussão:
+
+• Quais técnicas são escaláveis?
+
+• Como aplicá-las com várias BitDogLab em rede escolar?
 
 ---
 
